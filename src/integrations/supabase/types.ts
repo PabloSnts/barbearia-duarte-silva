@@ -14,13 +14,238 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          client_id: string | null
+          client_name: string
+          client_phone: string
+          created_at: string
+          end_at: string
+          id: string
+          owner_id: string
+          service_ids: string[]
+          service_names: string[]
+          source: string
+          start_at: string
+          status: string
+          total_price: number
+        }
+        Insert: {
+          client_id?: string | null
+          client_name: string
+          client_phone?: string
+          created_at?: string
+          end_at: string
+          id?: string
+          owner_id?: string
+          service_ids?: string[]
+          service_names?: string[]
+          source?: string
+          start_at: string
+          status?: string
+          total_price?: number
+        }
+        Update: {
+          client_id?: string | null
+          client_name?: string
+          client_phone?: string
+          created_at?: string
+          end_at?: string
+          id?: string
+          owner_id?: string
+          service_ids?: string[]
+          service_names?: string[]
+          source?: string
+          start_at?: string
+          status?: string
+          total_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blacklist: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          owner_id: string
+          phone: string
+          reason: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+          phone: string
+          reason?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+          phone?: string
+          reason?: string
+        }
+        Relationships: []
+      }
+      clients: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          notes: string
+          owner_id: string
+          phone: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string
+          owner_id?: string
+          phone?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string
+          owner_id?: string
+          phone?: string
+        }
+        Relationships: []
+      }
+      schedule_adjustments: {
+        Row: {
+          created_at: string
+          day: string
+          delta_min: number
+          from_appointment_id: string | null
+          id: string
+          owner_id: string
+          previous: Json
+          reverted: boolean
+        }
+        Insert: {
+          created_at?: string
+          day: string
+          delta_min: number
+          from_appointment_id?: string | null
+          id?: string
+          owner_id?: string
+          previous: Json
+          reverted?: boolean
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          delta_min?: number
+          from_appointment_id?: string | null
+          id?: string
+          owner_id?: string
+          previous?: Json
+          reverted?: boolean
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          active: boolean
+          availability: Json
+          created_at: string
+          duration_min: number
+          id: string
+          name: string
+          owner_id: string
+          price: number
+        }
+        Insert: {
+          active?: boolean
+          availability?: Json
+          created_at?: string
+          duration_min?: number
+          id?: string
+          name: string
+          owner_id?: string
+          price?: number
+        }
+        Update: {
+          active?: boolean
+          availability?: Json
+          created_at?: string
+          duration_min?: number
+          id?: string
+          name?: string
+          owner_id?: string
+          price?: number
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          absence_message: string
+          close_time: string
+          open_time: string
+          owner_id: string
+          shop_name: string
+          timezone: string
+          tv_name_format: string
+          updated_at: string
+          vacation_end: string | null
+          vacation_start: string | null
+          webhook_token: string
+          work_days: number[]
+        }
+        Insert: {
+          absence_message?: string
+          close_time?: string
+          open_time?: string
+          owner_id?: string
+          shop_name?: string
+          timezone?: string
+          tv_name_format?: string
+          updated_at?: string
+          vacation_end?: string | null
+          vacation_start?: string | null
+          webhook_token?: string
+          work_days?: number[]
+        }
+        Update: {
+          absence_message?: string
+          close_time?: string
+          open_time?: string
+          owner_id?: string
+          shop_name?: string
+          timezone?: string
+          tv_name_format?: string
+          updated_at?: string
+          vacation_end?: string | null
+          vacation_start?: string | null
+          webhook_token?: string
+          work_days?: number[]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      apply_schedule_shift: {
+        Args: { p_delta: number; p_from_id: string }
+        Returns: string
+      }
+      get_tv_queue: { Args: { p_owner: string }; Returns: Json }
+      revert_schedule_adjustment: { Args: { p_id: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
