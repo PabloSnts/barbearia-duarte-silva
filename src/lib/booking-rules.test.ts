@@ -68,9 +68,9 @@ describe("booking rules", () => {
       { id: "c", start_at: "2026-11-02T14:00:00.000Z", end_at: "2026-11-02T15:00:00.000Z", status: "scheduled" },
     ];
     const r = shiftPreview(list, "b", 15);
-    expect(r[0].start_at).toBe("2026-11-02T12:00:00.000Z");
-    expect(r[1].start_at).toBe("2026-11-02T13:15:00.000Z");
-    expect(r[2].end_at).toBe("2026-11-02T15:15:00.000Z");
+    expect(r[0]!.start_at).toBe("2026-11-02T12:00:00.000Z");
+    expect(r[1]!.start_at).toBe("2026-11-02T13:15:00.000Z");
+    expect(r[2]!.end_at).toBe("2026-11-02T15:15:00.000Z");
   });
 
   it("formats TV name as 'Nome - Serviços'", () => {

@@ -3,12 +3,12 @@ import type { Database } from "@/integrations/supabase/types";
 import { normalizePhone, validateBooking, type Availability, type RuleSettings } from "./booking-rules";
 
 export type CreateBookingInput = {
-  clientId?: string | null;
+  clientId?: string | null | undefined;
   clientName: string;
   clientPhone: string;
   startAt: string; // ISO
   serviceIds: string[];
-  source?: string;
+  source?: string | undefined;
 };
 
 export const DEFAULT_SETTINGS: RuleSettings = {

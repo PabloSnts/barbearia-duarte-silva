@@ -48,7 +48,7 @@ export function totalDuration(services: Pick<RuleService, "duration_min">[]): nu
 
 export function toMinutes(hhmm: string): number {
   const [h, m] = hhmm.split(":").map(Number);
-  return h * 60 + (m || 0);
+  return (h ?? 0) * 60 + (m || 0);
 }
 
 export function localParts(date: Date, timeZone: string) {
@@ -62,12 +62,12 @@ export function localParts(date: Date, timeZone: string) {
     weekday: "short",
     hourCycle: "h23",
   });
-  const p = Object.fromEntries(f.formatToParts(date).map((x) => [x.type, x.value]));
-  const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p.weekday);
+  const p: Record<string, string> = Object.fromEntries(f.formatToParts(date).map((x) => [x.type, x.value]));
+  const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p["weekday"] ?? "");
   return {
     weekday: wd,
-    minutes: Number(p.hour) * 60 + Number(p.minute),
-    date: `${p.year}-${p.month}-${p.day}`,
+    minutes: Number(p["hour"]) * 60 + Number(p["minute"]),
+    date: `${p["year"]}-${p["month"]}-${p["day"]}`,
   };
 }
 
@@ -169,7 +169,7 @@ export function formatTvName(name: string, services: string[], format: string): 
     case "full_name":
       return parts.length > 1 ? `${first} ${parts[parts.length - 1]}` : first;
     case "initials":
-      return parts.map((p) => p[0].toUpperCase() + ".").join(" ");
+      return parts.map((p) => (p[0] ?? "").toUpperCase() + ".").join(" ");
     case "name_services":
       return services.length ? `${first} - ${services.join(" + ")}` : first;
     default:
